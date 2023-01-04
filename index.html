@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE-edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            clifford: '#da373d',
+          }
+        }
+      }
+    }
+  </script>
+  <title>Document</title>
+    </head>
+    <body>
+        <div class="flex flex-col" >
+        <h1 class="text-3xl font-bold text-clifford">
+            Rust Web Assembly
+          </h1>
+        <div>
+        <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+            <div class="mb-4">
+            <label for="firstNumber" class="block text-gray-700 text-sm font-bold mb-2" >First Number</label>
+            <input type="number" name="firstNumber" id="firstNumber" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" /> 
+        </div>
+        <div class="mb-4">
+            <label for="secondNumber" class="block text-gray-700 text-sm font-bold mb-2" >Second Number</label>
+            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="number" name="secondNumber" id="secondNumber" /><br />
+        </div>
+        <div class="mb-4">
+            <label class="text-gray-700 text-sm font-bold mb-2">Result: </label><span id="result"></span>
+        </div>
+            <button id="btnAdd" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Add</button>
+            <button id="btnSub" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Sub</button>
+        </form>
+    </div>
+    </div>
+        <script type="module">
+            import init, { add, sub } from "./pkg/hello_wasm.js";
+
+            await init();
+
+            document.getElementById("btnAdd").addEventListener('click', function clickAdd(e){
+                e.preventDefault();
+                let firstNumber = document.getElementById("firstNumber").value;
+                let secondNumber = document.getElementById("secondNumber").value;
+                let result = add(firstNumber, secondNumber);
+
+                document.getElementById("result").innerText = result;
+            });
+
+            document.getElementById("btnSub").addEventListener('click', function clickAdd(e){
+                e.preventDefault();
+                let firstNumber = document.getElementById("firstNumber").value;
+                let secondNumber = document.getElementById("secondNumber").value;
+                let result = sub(firstNumber, secondNumber);
+
+                document.getElementById("result").innerText = result;
+            });
+
+
+        </script>
+
+        <script type="text/javascript">
+
+        </script>
+    </body>
+</html>
